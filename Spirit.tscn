@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Spirit.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Player/orb.png" type="Texture" id=2]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0.4725 ), 0.0, 0.0, 0, 0, Vector2( 0.976198, 0.2085 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 1
+emission_sphere_radius = 14.76
+flag_disable_z = true
+angular_velocity = 0.000169926
+orbit_velocity = 0.0
+orbit_velocity_random = 1.0
+scale = 0.2
+scale_random = 1.0
+scale_curve = SubResource( 2 )
+color = Color( 0.615686, 0.219608, 0.219608, 1 )
+hue_variation_random = 1.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 70.0
+
+[node name="Spirit" type="KinematicBody2D"]
+position = Vector2( 353, 195 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Particles2D" type="Particles2D" parent="."]
+scale = Vector2( 0.2, 0.2 )
+amount = 500
+local_coords = false
+process_material = SubResource( 3 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.839216, 0.0862745, 0.0862745, 1 )
+show_behind_parent = true
+texture = ExtResource( 2 )
+
+[node name="Attack" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
+visible = false
+scale = Vector2( 0.2, 0.2 )
+shape = SubResource( 4 )
+[connection signal="area_entered" from="Attack" to="." method="_on_Attack_area_entered"]
