@@ -11,8 +11,8 @@ var double_jump_max = 2
 var jump_timer = 0.2
 var jump_timer_fall = 0.2
 var motion = Vector2() 
-
-
+var dash = 1
+var dash_timer = 0.5
 
 
 
@@ -29,6 +29,7 @@ func _physics_process(delta):
 	motion.y += GRAVITY
 	jump_timer -= delta
 	jump_timer_fall -= delta
+	dash_timer -= delta
 	var friction = false
 	
 	if $LRayCast2D.is_colliding() :
@@ -100,7 +101,11 @@ func _physics_process(delta):
 	
 	motion = move_and_slide(motion,UP)
 
-
+func _dash():
+	if dash>0 :
+		print("ok")
+	
+	pass 
 
 
 
