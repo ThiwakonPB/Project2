@@ -34,18 +34,27 @@ func _physics_process(delta):
 	
 	if $LRayCast2D.is_colliding() :
 		GRAVITY = 4
-	elif $RRayCast2D.is_colliding() :
+	elif $RRayCast2D.is_colliding():
 		GRAVITY = 4
 	else :
 		GRAVITY = 20
 		
-	if $LRayCast2D.is_colliding() && !is_on_floor() && Input.is_action_pressed("ui_up")  :
-		motion.y = JUMP_HEIGHT
-		motion.x = 400
+	if $LRayCast2D.is_colliding() && !is_on_floor():
+		if Input.is_action_pressed("ui_up") && Input.is_action_pressed("ui_left"):
+			motion.y = JUMP_HEIGHT
+			motion.x = 400
+		elif Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_left"):
+			motion.y = JUMP_HEIGHT
+			print("FUCK")
+			motion.x = 4000
 		
-	if $RRayCast2D.is_colliding() && !is_on_floor() && Input.is_action_pressed("ui_up")  :
-		motion.y = JUMP_HEIGHT
-		motion.x = -400
+	if $RRayCast2D.is_colliding() && !is_on_floor():
+		if Input.is_action_pressed("ui_up") && Input.is_action_pressed("ui_right"):
+			motion.y = JUMP_HEIGHT
+			motion.x = -400
+		elif Input.is_action_pressed("ui_up") && !Input.is_action_pressed("ui_right"):
+			motion.y = JUMP_HEIGHT
+			motion.x = -4000
 	
 	if Input.is_action_pressed("ui_right"):
 		motion.x = min(motion.x + ACCELERATION, MAX_SPEED)
